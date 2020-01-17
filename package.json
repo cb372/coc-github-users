@@ -1,0 +1,38 @@
+{
+  "name": "coc-github-users",
+  "version": "1.0.0",
+  "description": "coc.nvim completion provider for GitHub usernames",
+  "main": "lib/index.js",
+  "repository": "https://github.com/cb372/coc-github-users",
+  "author": "cb372",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "clean": "rm -rf lib",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "engines": {
+    "coc": "^0.0.72"
+  },
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "coc.githubUsers.githubAccessToken": {
+          "type": "string",
+          "description": "A GitHub personal access token. This is used to query the GitHub GraphQL API. It doesn't need any scopes. Can also be set using environment variable COC_GITHUB_USERS_TOKEN."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.10",
+    "axios": "^0.19.1",
+    "coc.nvim": "^0.0.74",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}
