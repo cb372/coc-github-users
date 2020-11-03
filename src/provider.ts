@@ -11,11 +11,17 @@ import {
   TextDocument
 } from 'vscode-languageserver-protocol'
 
-const axios = require('axios');
+const url = require('url')
+const axios = require('axios')
 
 interface GitHubUser {
   login: string;
   name: string | null;
+}
+
+interface ProviderOptions {
+  graphqlApiUrl?: string,
+  unixSocket?: string,
 }
 
 export class GitHubUsersCompletionProvider implements CompletionItemProvider {
@@ -23,7 +29,7 @@ export class GitHubUsersCompletionProvider implements CompletionItemProvider {
   private triggerPattern = /@(.{2,})/
   private nonWhitespaceCharPattern = /\S/
 
-  constructor(private accessToken: string) {}
+  constructor(private accessToken: string, private options: ProviderOptions) {}
 
   public async provideCompletionItems(
     _document: TextDocument,
@@ -69,16 +75,24 @@ export class GitHubUsersCompletionProvider implements CompletionItemProvider {
           }
         }
       }`
+
     try {
+      const graphqlEndpoint = this.options.graphqlApiUrl || 'https://api.github.com/graphql'
+      const requestConfig = { query }
+      const endpointUrl = url.parse(graphqlEndpoint)
+
       const response = await axios.post(
-        'https://api.github.com/graphql',
+        graphqlEndpoint,
         { query },
         {
           headers: {
             Authorization: 'Bearer ' + this.accessToken,
-          }
+            Host: endpointUrl.host
+          },
+          socketPath: this.options.unixSocket,
         }
       )
+
       return response.data.data.search.nodes
     } catch (error) {
       console.error(error)
