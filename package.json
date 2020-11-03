@@ -1,6 +1,6 @@
 {
   "name": "coc-github-users",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "coc.nvim completion provider for GitHub usernames",
   "main": "lib/index.js",
   "repository": "https://github.com/cb372/coc-github-users",
