@@ -42,3 +42,23 @@ both their username and real name in the autocomplete item label.
 You can search by real name by separating the names with underscores. For
 example, if you type `@chris_birchall` you will also get you an autocomplete
 list containing my username `@cb372`.
+
+## Github Enterprise support
+
+If you have an internal GitHub enterprise installation at work, you can configure it like so:
+
+```json
+{
+  "coc.githubUsers.graphqlApiUrl": "http://your.internal.github.company.com/api/graphql",
+  "coc.githubUsers.unixSocket": "/optional/path/to/unix.sock"
+}
+```
+
+The `unixSocket` is optional, but useful if your company proxies all internal traffic through a local socket.
+
+If you prefer ENV variables, you can configure:
+
+* `COC_GITHUB_USERS_GRAPHQL_API_URL`
+* `COC_GITHUB_USERS_UNIX_SOCKET`
+
+in your shell environment instead.
